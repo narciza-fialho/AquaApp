@@ -9,7 +9,7 @@ namespace AquaApp.ViewModels
     {
         public AboutViewModel()
         {
-            Title = "About";
+            Title = "Analise";
             OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://aka.ms/xamarin-quickstart"));
         }
 

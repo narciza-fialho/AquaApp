@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             x:Class="AquaApp.Views.InicioPage"
+             xmlns:vm="clr-namespace:AquaApp.ViewModels"             
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:InicioViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Fundo">#B0C4DE</Color>
+            <Color x:Key="FrameFundo">#F0F8FF</Color>
+            <Color x:Key="FrameMensagemFundo">#98FB98</Color>
+            <Color x:Key="Texto">#4F4F4F</Color>
+            <Color x:Key="GraficoFundo">#00FFFF</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView BackgroundColor="{StaticResource Fundo}">
+        <StackLayout>
+
+            <Label Margin="0,10,0,10" 
+                       Text="Consumo dos meses anteriores" 
+                       FontAttributes="Bold" 
+                       FontSize="Medium" 
+                       HorizontalOptions="Center"
+                       TextColor="{StaticResource Texto}"/>
+            <microcharts:ChartView x:Name="chart" HeightRequest="200" BackgroundColor="{StaticResource GraficoFundo}" />
+
+            <StackLayout Orientation="Vertical" Spacing="10">
+                
+                <Label Text="Seu consumo até hoje:" 
+                           FontSize="Medium" 
+                           HorizontalOptions="Center" 
+                           FontAttributes="Bold" 
+                           Padding="0,50,0,0"
+                           TextColor="{StaticResource Texto}"/>
+                <Frame CornerRadius="100" Padding="15" BackgroundColor="{StaticResource FrameFundo}" Margin="90,0,90,0">
+                    <Label Text="5 m3" 
+                           HorizontalOptions="Center" 
+                           FontAttributes="Bold" 
+                           TextColor="{StaticResource Texto}"/>
+                </Frame>
+                
+                <Label Text="Consumo do mês anterior:" 
+                           FontSize="Medium" 
+                           HorizontalOptions="Center" 
+                           FontAttributes="Bold"
+                           Padding="0,10,0,0"
+                           TextColor="{StaticResource Texto}"/>
+                <Frame CornerRadius="100" Padding="15" BackgroundColor="{StaticResource FrameFundo}" Margin="90,0,90,0">
+                    <Label Text="15 m3" 
+                           HorizontalOptions="Center" 
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Texto}"/>
+                </Frame>
+
+                <Label Text="Mensagens" FontSize="Medium" HorizontalOptions="Center" Margin="0,50,0,0" TextColor="{StaticResource Texto}"/>
+                <Frame BackgroundColor="{StaticResource FrameMensagemFundo}" HeightRequest="40">
+                    <Label Text="aqui sera as mensagens" HorizontalOptions="Center" TextColor="{StaticResource Texto}"/>
+                </Frame>
+                
+            </StackLayout>
+
+        </StackLayout>
+
+    </ScrollView>
+
+</ContentPage>
