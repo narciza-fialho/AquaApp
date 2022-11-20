@@ -12,8 +12,9 @@ namespace AquaApp.Models
 
     public class Mensal
     {
-        public int IdMes { get; set; }
-        public string Mes { get; set; }
-        public decimal ConsumoTotal { get; set; }
+        public string Id { get; set; }
+        public int Mes { get; set; }
+        public int Ano { get; set; }
+        public int ConsumoTotal { get; set; }
     }
 }

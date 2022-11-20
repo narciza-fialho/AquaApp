@@ -12,11 +12,11 @@ namespace AquaApp.Models
 
     public class Registro
     {
-        public int IdRegistro { get; set; }
+        public string Id { get; set; }
         public DateTime DataOcorrencia { get; set; }
-        public DateTime DataSolucao { get; set; }
+        public DateTime? DataSolucao { get; set; }
         public string Mensagem { get; set; }        
-        public string Decisao { get; set; }
+        public bool Decisao { get; set; }
 
     }
 }

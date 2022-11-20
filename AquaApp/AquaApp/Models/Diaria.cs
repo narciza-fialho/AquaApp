@@ -12,7 +12,7 @@ namespace AquaApp.Models
 
     public class Diaria
     {
-        public int IdDia { get; set; }
+        public string Id { get; set; }
         public decimal Valor { get; set; }
         public DateTime DiaHora { get; set; }
         public bool Situação { get; set; }

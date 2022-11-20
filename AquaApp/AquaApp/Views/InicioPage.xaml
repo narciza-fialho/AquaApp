@@ -14,9 +14,8 @@
         <ResourceDictionary>
             <Color x:Key="Fundo">#B0C4DE</Color>
             <Color x:Key="FrameFundo">#F0F8FF</Color>
-            <Color x:Key="FrameMensagemFundo">#98FB98</Color>
             <Color x:Key="Texto">#4F4F4F</Color>
-            <Color x:Key="GraficoFundo">#00FFFF</Color>
+            <Color x:Key="BotaoFundo">#4682B4</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -24,45 +23,55 @@
         <StackLayout>
 
             <Label Margin="0,10,0,10" 
-                       Text="Consumo dos meses anteriores" 
+                       Text="Consumo dos meses anteriores (m³)"
                        FontAttributes="Bold" 
                        FontSize="Medium" 
                        HorizontalOptions="Center"
                        TextColor="{StaticResource Texto}"/>
-            <microcharts:ChartView x:Name="chart" HeightRequest="200" BackgroundColor="{StaticResource GraficoFundo}" />
+            <microcharts:ChartView x:Name="chart" HeightRequest="200"/>
 
-            <StackLayout Orientation="Vertical" Spacing="10">
-                
-                <Label Text="Seu consumo até hoje:" 
+            <StackLayout Orientation="Vertical">
+
+                <Label Text="Seu consumo até hoje (m³)" 
                            FontSize="Medium" 
                            HorizontalOptions="Center" 
                            FontAttributes="Bold" 
-                           Padding="0,50,0,0"
+                           Padding="0,40,0,0"
                            TextColor="{StaticResource Texto}"/>
                 <Frame CornerRadius="100" Padding="15" BackgroundColor="{StaticResource FrameFundo}" Margin="90,0,90,0">
-                    <Label Text="5 m3" 
+                    <Label Text="{Binding consumoAtual}" 
                            HorizontalOptions="Center" 
                            FontAttributes="Bold" 
                            TextColor="{StaticResource Texto}"/>
                 </Frame>
-                
-                <Label Text="Consumo do mês anterior:" 
+
+                <Label Text="Consumo do mês anterior (m³)" 
                            FontSize="Medium" 
                            HorizontalOptions="Center" 
                            FontAttributes="Bold"
                            Padding="0,10,0,0"
                            TextColor="{StaticResource Texto}"/>
                 <Frame CornerRadius="100" Padding="15" BackgroundColor="{StaticResource FrameFundo}" Margin="90,0,90,0">
-                    <Label Text="15 m3" 
+                    <Label Text="{Binding consumoPassado}" 
                            HorizontalOptions="Center" 
                            FontAttributes="Bold"
                            TextColor="{StaticResource Texto}"/>
                 </Frame>
 
-                <Label Text="Mensagens" FontSize="Medium" HorizontalOptions="Center" Margin="0,50,0,0" TextColor="{StaticResource Texto}"/>
-                <Frame BackgroundColor="{StaticResource FrameMensagemFundo}" HeightRequest="40">
-                    <Label Text="aqui sera as mensagens" HorizontalOptions="Center" TextColor="{StaticResource Texto}"/>
+                <Label Text="Mensagens" FontSize="Medium" HorizontalOptions="Center" Margin="0,30,0,0" TextColor="{StaticResource Texto}"/>
+                <Frame BackgroundColor="{Binding FundoMensagem}" HeightRequest="20">
+                    <Label Text="{Binding MensagemUsuario}" 
+                           HorizontalOptions="Center" 
+                           TextColor="{StaticResource Texto}"/>
                 </Frame>
+                <Button Text = "Veja mais"
+                        x:Name = "Button1"
+                        Clicked = "NavigateTo"
+                        BackgroundColor = "{StaticResource BotaoFundo}"
+                        TextColor = "#F0F8FF"
+                        HeightRequest = "50"
+                        Margin="90,0,90,0"/>
+                
                 
             </StackLayout>
 
