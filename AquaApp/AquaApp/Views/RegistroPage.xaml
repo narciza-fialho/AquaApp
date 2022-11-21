@@ -8,29 +8,88 @@
     <ContentPage.BindingContext>
         <vm:RegistroViewModel />
     </ContentPage.BindingContext>
-    
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Fundo">#B0C4DE</Color>
             <Color x:Key="FrameFundo">#F0F8FF</Color>
             <Color x:Key="Texto">#4F4F4F</Color>
-            <Color x:Key="BotaoFundo">#4682B4</Color>
+            <Color x:Key="BotaoFundoSim">#FA8072</Color>
+            <Color x:Key="BotaoFundoNao">#98FB98</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
-        
+    <Grid BackgroundColor="{StaticResource Fundo}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <StackLayout Grid.Row="1" VerticalOptions="Center">
+
+            <Frame BackgroundColor="{Binding FundoMensagem}" HeightRequest="50" Margin="0,0,0,10">
+                <Label Text="{Binding MensagemUsuario}" 
+                       HorizontalOptions="Center" 
+                       TextColor="{StaticResource Texto}"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       HorizontalTextAlignment="Center"/>
+            </Frame>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10">
+                <Button Text = "Não fechar válvula"
+                        x:Name = "ButtonNaoFecha"
+                        BackgroundColor = "{StaticResource BotaoFundoNao}"
+                        TextColor="{StaticResource Texto}"
+                        HeightRequest = "50"
+                        Clicked = "BotaoNaoFeche"
+                    />
+                <Button Text = "Fechar válvula"    
+                        Clicked = "BotaoFeche"
+                        x:Name = "ButtonFecha"
+                        BackgroundColor = "{StaticResource BotaoFundoSim}"
+                        TextColor="{StaticResource Texto}"
+                        HeightRequest = "50"
+                    />
+            </StackLayout>
+
+        </StackLayout>
+
         <ScrollView Grid.Row="2">
-            <ListView x:Name="listaRegistro">
-                
+            <ListView x:Name="listaRegistro" RowHeight="130">
+                <ListView.ItemTemplate >
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical" Padding="10" HeightRequest="100">
+                                <Label Text="{Binding Mensagem}"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="15"
+                                   FontAttributes="Bold"/>
+                                <StackLayout >
+                                    <Label Margin="50,5,10,0">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Ocorrência:" FontAttributes="Bold" />
+                                                <Span Text="                                         "/>
+                                                <Span Text="Resposta:" FontAttributes="Bold"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Margin="10,0,10,0">
+                                        <Label.FormattedText>
+                                            <FormattedString >
+                                                <Span Text="{Binding DataOcorrencia}"/>
+                                                <Span Text="                "/>
+                                                <Span Text="{Binding DataSolucao}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </ScrollView>
-        
     </Grid>
-
 </ContentPage>

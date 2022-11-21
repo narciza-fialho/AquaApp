@@ -80,9 +80,14 @@ namespace AquaApp.ViewModels
 
             if (lista.Count > 0)
             {
-                var retorno = lista.Where(m => m.DiaHora.Month == dateTime.Month).FirstOrDefault();
-                decimal converte = (retorno.Valor / 1000);
-                return converte.ToString();
+                var retorno = lista.Where(m => m.DiaHora.Month == dateTime.Month).ToList();
+                decimal converte = 0;
+                foreach(var item in retorno)
+                {
+                    converte += item.Valor;
+                }
+
+                return (converte / 1000).ToString();
             } else
                 return "0";
         }

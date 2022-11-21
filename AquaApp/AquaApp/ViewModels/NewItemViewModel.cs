@@ -1,4 +1,5 @@
 ﻿using AquaApp.Models;
+using AquaApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,11 +10,13 @@ namespace AquaApp.ViewModels
 {
     public class NewItemViewModel : BaseViewModel
     {
+        private ApiAccess apiAccess { get; set; }
         private string text;
         private string description;
 
         public NewItemViewModel()
         {
+            apiAccess = new ApiAccess();
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
             this.PropertyChanged +=
@@ -60,6 +63,19 @@ namespace AquaApp.ViewModels
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
+        }
+
+        public void RespondeRegistroFecha()
+        {
+            Registro registro = new Registro();
+            registro.DataOcorrencia = DateTime.Now;
+            registro.Decisao = false;
+            
+            if(apiAccess.IncluirRegistroAberto(registro))
+            {
+                Console.WriteLine("deu bom");
+            }
+
         }
     }
 }

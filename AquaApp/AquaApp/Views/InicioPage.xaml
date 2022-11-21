@@ -71,8 +71,6 @@
                         TextColor = "#F0F8FF"
                         HeightRequest = "50"
                         Margin="90,0,90,0"/>
-                
-                
             </StackLayout>
 
         </StackLayout>

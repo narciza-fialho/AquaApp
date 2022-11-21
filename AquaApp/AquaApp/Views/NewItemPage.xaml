@@ -16,6 +16,7 @@
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
             </StackLayout>
+            <Button Text="Adicionar registro" Clicked = "BotaoPut" x:Name = "ButtonPut" HorizontalOptions="FillAndExpand"></Button>
         </StackLayout>
     </ContentPage.Content>
     

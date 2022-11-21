@@ -22,6 +22,7 @@ namespace AquaApp.Views
 
         protected override void OnAppearing()
         {
+            base.OnAppearing();
             var charts = inicioView.GraficoConsumo();
             this.chart.Chart = charts;
         }

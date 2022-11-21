@@ -11,11 +11,18 @@ namespace AquaApp.Views
     public partial class NewItemPage : ContentPage
     {
         public Item Item { get; set; }
+        public NewItemViewModel viewModel { get; set; }
 
         public NewItemPage()
         {
             InitializeComponent();
+            viewModel = new NewItemViewModel();
             BindingContext = new NewItemViewModel();
+        }
+
+        void BotaoPut(object sender, EventArgs e)
+        {
+            viewModel.RespondeRegistroFecha();
         }
     }
 }

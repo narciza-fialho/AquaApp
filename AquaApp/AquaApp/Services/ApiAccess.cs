@@ -82,6 +82,32 @@ namespace AquaApp.Services
             }
         }
 
+        public bool AtualizarRegistroAberto(Registro registro)
+        {
+            try
+            {
+                var consulta = PutRegistro(registro).Result;
+                return consulta;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public bool IncluirRegistroAberto(Registro registro)
+        {
+            try
+            {
+                var consulta = PostRegistro(registro).Result;
+                return consulta;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<List<Diaria>> GetDiaria(int mes)
         {
             HttpResponseMessage responseMessage = new HttpResponseMessage();
@@ -154,5 +180,59 @@ namespace AquaApp.Services
             }
         }
 
+        public async Task<bool> PutRegistro(Registro registro)
+        {
+            HttpResponseMessage responseMessage = new HttpResponseMessage();
+
+            try
+            {
+                var stringContent = new StringContent(JsonConvert.SerializeObject(registro), Encoding.UTF8, "application/json");
+                responseMessage = client.PutAsync($"{_urlApi}/Registro/{registro.Id}", stringContent).Result;
+                
+                responseMessage.EnsureSuccessStatusCode();
+                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+
+                return responseMessage.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> PostRegistro(Registro registro)
+        {
+            HttpResponseMessage responseMessage = new HttpResponseMessage();
+            
+            RegistroPost registroPost = new RegistroPost();
+            registroPost.DataOcorrencia = registro.DataOcorrencia;
+            registroPost.Decisao = registro.Decisao;
+            registroPost.DataSolucao = null;
+            registroPost.Mensagem = "";
+
+            try
+            {
+                var stringContent = new StringContent(JsonConvert.SerializeObject(registroPost), Encoding.UTF8, "application/json");
+                responseMessage = client.PostAsync($"{_urlApi}/Registro", stringContent).Result;
+
+                responseMessage.EnsureSuccessStatusCode();
+                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+
+                return responseMessage.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+    }
+
+    public class RegistroPost
+    {
+        public DateTime DataOcorrencia { get; set; }
+        public DateTime? DataSolucao { get; set; }
+        public string Mensagem { get; set; }
+        public bool Decisao { get; set; }
     }
 }
