@@ -27,11 +27,17 @@ namespace AquaApp.Views
         protected override void OnAppearing()
         {
             var retorno = registroView.RetornaRegistroBool();
-            if (retorno)
+            if (retorno == "true")
             {
                 this.ButtonFecha.IsVisible = true;
                 this.ButtonNaoFecha.IsVisible = true;
-            } else
+            } 
+            else if (retorno == "ultimo")
+            {
+                this.ButtonFecha.IsVisible = false;
+                this.ButtonNaoFecha.IsVisible = true;
+            } 
+            else if (retorno == "false")
             {
                 this.ButtonFecha.IsVisible = false;
                 this.ButtonNaoFecha.IsVisible = false;

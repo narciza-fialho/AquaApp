@@ -108,6 +108,20 @@ namespace AquaApp.Services
             }
         }
 
+        public bool AbreValvula(Registro registro)
+        {
+            try
+            {
+                var consulta = PostRegistroUsuario(registro).Result;
+                var retorno = GetAbreValvula().Result;
+                return retorno;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<List<Diaria>> GetDiaria(int mes)
         {
             HttpResponseMessage responseMessage = new HttpResponseMessage();
@@ -206,6 +220,7 @@ namespace AquaApp.Services
             
             RegistroPost registroPost = new RegistroPost();
             registroPost.DataOcorrencia = registro.DataOcorrencia;
+            
             registroPost.Decisao = registro.Decisao;
             registroPost.DataSolucao = null;
             registroPost.Mensagem = "";
@@ -217,6 +232,50 @@ namespace AquaApp.Services
 
                 responseMessage.EnsureSuccessStatusCode();
                 var responseContent = await responseMessage.Content.ReadAsStringAsync();
+
+                return responseMessage.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> PostRegistroUsuario(Registro registro)
+        {
+            HttpResponseMessage responseMessage = new HttpResponseMessage();
+
+            RegistroPost registroPost = new RegistroPost();
+            registroPost.DataOcorrencia = registro.DataOcorrencia;
+            registroPost.DataSolucao = registro.DataSolucao;
+            registroPost.Mensagem = registro.Mensagem;
+            registroPost.Decisao = registro.Decisao;
+
+            try
+            {
+                var stringContent = new StringContent(JsonConvert.SerializeObject(registroPost), Encoding.UTF8, "application/json");
+                responseMessage = client.PostAsync($"{_urlApi}/Registro", stringContent).Result;
+
+                responseMessage.EnsureSuccessStatusCode();
+                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+
+                return responseMessage.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> GetAbreValvula()
+        {
+            HttpResponseMessage responseMessage = new HttpResponseMessage();
+
+            try
+            {
+                responseMessage = client.GetAsync($"{_urlApi}/Valvula/abrir").Result;
+                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                responseMessage.EnsureSuccessStatusCode();
 
                 return responseMessage.IsSuccessStatusCode;
             }

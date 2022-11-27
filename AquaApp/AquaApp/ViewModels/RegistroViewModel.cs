@@ -31,21 +31,36 @@ namespace AquaApp.ViewModels
             return registros.Where(e => e.DataSolucao.HasValue).ToList();
         }
 
-        public bool RetornaRegistroBool()
+        public string RetornaRegistroBool()
         {
-            List<Registro> registros = apiAccess.ConsultarRegistroAbertos();
+            List<Registro> registrosAbertos = apiAccess.ConsultarRegistroAbertos();
+            List<Registro> registros = apiAccess.ConsultarRegistro();
+            if (registrosAbertos.Count > 0)
+            {
+                return "true";
+            } else if (registros.LastOrDefault().Decisao)
+            {
+                return "ultimo";
+            }
 
-            return (registros.Count > 0);
+            return "false";
         }
 
         public List<string> RetornaMensagemUsuario()
         {
             List<Registro> lista = apiAccess.ConsultarRegistroAbertos();
+            List<Registro> registros = apiAccess.ConsultarRegistro();
             List<string> retorno = new List<string>();
             if (lista.Count > 0)
             {
                 retorno.Add("Aumento de consumo detectato, deseja fechar a válvula?");
                 retorno.Add("#FA8072");
+                return retorno;
+            }
+            else if(registros.LastOrDefault().Decisao)
+            {
+                retorno.Add("A válvula esta fechada, deseja abrir?");
+                retorno.Add("#98FB98");
                 return retorno;
             }
             else
@@ -59,7 +74,7 @@ namespace AquaApp.ViewModels
         public void RespondeRegistroFecha()
         {
             List<Registro> lista = apiAccess.ConsultarRegistroAbertos();
-
+            
             if (lista.Count > 0)
             {
                 foreach (var item in lista)
@@ -75,7 +90,7 @@ namespace AquaApp.ViewModels
         public void RespondeRegistroNaoFecha()
         {
             List<Registro> lista = apiAccess.ConsultarRegistroAbertos();
-
+            List<Registro> registros = apiAccess.ConsultarRegistro();
             if (lista.Count > 0)
             {
                 foreach (var item in lista)
@@ -86,6 +101,26 @@ namespace AquaApp.ViewModels
                     apiAccess.AtualizarRegistroAberto(item);
                 }
             }
+            else if (registros.LastOrDefault().Decisao)
+            {
+                CriaRegistroFecha();
+            }
+        }
+
+        public void CriaRegistroFecha()
+        {
+            Registro registro = new Registro();
+            registro.DataOcorrencia = DateTime.Now;
+            registro.DataSolucao = DateTime.Now;
+            registro.Mensagem = "Usuário abriu a válvula";
+            registro.Decisao = false;
+
+            if (apiAccess.AbreValvula(registro))
+            {
+
+                Console.WriteLine("deu bom");
+            }
+
         }
     }
 }
