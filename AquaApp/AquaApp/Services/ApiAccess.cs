@@ -87,6 +87,12 @@ namespace AquaApp.Services
             try
             {
                 var consulta = PutRegistro(registro).Result;
+
+                if (registro.Decisao)
+                {
+                    var retorno = GetFechaValvula();
+                }
+
                 return consulta;
             }
             catch (Exception ex)
@@ -274,6 +280,24 @@ namespace AquaApp.Services
             try
             {
                 responseMessage = client.GetAsync($"{_urlApi}/Valvula/abrir").Result;
+                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                responseMessage.EnsureSuccessStatusCode();
+
+                return responseMessage.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> GetFechaValvula()
+        {
+            HttpResponseMessage responseMessage = new HttpResponseMessage();
+
+            try
+            {
+                responseMessage = client.GetAsync($"{_urlApi}/Valvula/fechar").Result;
                 var responseContent = await responseMessage.Content.ReadAsStringAsync();
                 responseMessage.EnsureSuccessStatusCode();
 
